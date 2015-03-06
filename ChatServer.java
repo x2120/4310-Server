@@ -1,10 +1,8 @@
-//server
+//Sean y u no comment
 import java.net.*;
 import java.io.*;
 import java.util.Vector;
 import java.lang.*;
-
-
 
 public class ChatServer {
 
@@ -18,7 +16,6 @@ public class ChatServer {
     private static Vector<PrintStream> streams = new Vector<PrintStream>();
 
     public static void main(String[] args) throws IOException{
-
         try{
             System.out.println("Connecting to port " + port + " ....");
             server = new ServerSocket(port);
@@ -37,9 +34,7 @@ public class ChatServer {
         }
     }
 
-
     private static class chatHandler extends Thread{
-
         private Socket clientSocket;
 
         public chatHandler(Socket clientSocket){
