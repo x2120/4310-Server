@@ -1,0 +1,103 @@
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.*;
+
+public class GUI extends JFrame {
+
+    private GridBagLayout gridBag = new GridBagLayout();
+    GridBagConstraints constraints = new GridBagConstraints();
+    
+    //User input
+    private static final String[] ALL_STRINGS = { "Bob", "Frank", "Charle" };
+    
+    //
+    private JList<String> list = new JList<String>(ALL_STRINGS);
+    private JList<String> queue = new JList<String>();
+    private JTextField textfield = new JTextField();
+    protected JTextArea textArea = new JTextArea("stuff");
+    private JPanel selectionPanel = new JPanel(gridBag);
+    private JButton clear = new JButton("Send Message");
+
+    public GUI() {
+        setWindowProperties();
+        addComponents();
+    }
+
+    private void setWindowProperties() {
+        setLayout(gridBag);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(500, 500));
+        setTitle("Chat server");
+        setResizable(true);
+        setLocationRelativeTo(null);
+    }
+
+    private void setUpSelectionPanel() {
+        JLabel listLabel = new JLabel("Users Online");
+        JLabel queueLabel = new JLabel("Chat Box");
+        //textField = new JTextField();
+        JScrollPane listScroll = new JScrollPane(list);
+        JScrollPane queueScroll = new JScrollPane(queue);
+        //JTextArea textArea = new JTextArea
+        
+        Dimension scrollSize = new Dimension(150, 300);
+        listScroll.setPreferredSize(scrollSize);
+        queueScroll.setPreferredSize(scrollSize);
+        
+         
+        //TEXT INPUT AREA
+        constraints.gridx = 2;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        gridBag.setConstraints(textfield,constraints);
+
+
+        //SEND MESSAGE BUTTON
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        gridBag.setConstraints(clear, constraints);
+        
+        //USERS ONLINE
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        gridBag.setConstraints(listLabel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 3;
+        gridBag.setConstraints(listScroll, constraints);
+        
+        //RESET CONSTRAINTS
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        
+        //RECIVED AND SENT MESSAGE BOX
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        gridBag.setConstraints(queueLabel, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 1;
+        constraints.gridwidth = 4;
+        constraints.gridheight = 3;
+        gridBag.setConstraints(queueScroll, constraints);
+
+        selectionPanel.add(listLabel);
+        selectionPanel.add(listScroll);
+        selectionPanel.add(textfield);
+        selectionPanel.add(clear);
+        selectionPanel.add(queueLabel);
+        selectionPanel.add(queueScroll);
+    }
+
+    private void addComponents() {
+        setUpSelectionPanel();
+        add(selectionPanel);
+    }
+
+    public static void main(String[] args) {
+        new GUI().setVisible(true);
+    }
+}
