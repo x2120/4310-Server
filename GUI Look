@@ -1,0 +1,104 @@
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.*;
+
+public class GUI extends JFrame {
+
+    private GridBagLayout gridBag = new GridBagLayout();
+    GridBagConstraints constraints = new GridBagConstraints();
+    
+    //User input
+    private static final String[] ALL_STRINGS = { "Bob", "Frank", "Charle" };
+    
+    //
+    private JList<String> users = new JList<String>(ALL_STRINGS);
+    private JList<String> message = new JList<String>();
+    private JTextField textfield = new JTextField(27);
+    protected JTextArea textArea = new JTextArea("stuff");
+    private JPanel selectionPanel = new JPanel(gridBag);
+    private JButton clear = new JButton("Send Message");
+
+    public GUI() {
+        setWindowProperties();
+        addComponents();
+    }
+
+    private void setWindowProperties() {
+        setLayout(gridBag);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(450, 585));
+        //Title should say if it is online or offline
+        setTitle("Chat server");
+        setResizable(false);
+        setLocationRelativeTo(null);
+    }
+
+    private void setUpSelectionPanel() {
+        JLabel userLabel = new JLabel("Users Online");
+        JLabel chatLabel = new JLabel("Chat Box");
+        JScrollPane usersOnline = new JScrollPane(users);
+        JScrollPane MessBox = new JScrollPane(message);
+
+
+        //SIZING OF LIST ONLINE AND MESSAGE     
+        usersOnline.setPreferredSize(new Dimension(120, 500));
+        MessBox.setPreferredSize(new Dimension(301, 500));
+        
+         
+        //TEXT INPUT AREA
+        constraints.gridx = 2;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        gridBag.setConstraints(textfield,constraints);
+
+
+        //SEND MESSAGE BUTTON
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        gridBag.setConstraints(clear, constraints);
+        
+        //USERS ONLINE
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        gridBag.setConstraints(userLabel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 3;
+        gridBag.setConstraints(usersOnline, constraints);
+        
+        //RESET CONSTRAINTS
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        
+        //RECIVED AND SENT MESSAGE BOX
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        gridBag.setConstraints(chatLabel, constraints);
+         
+        constraints.gridx = 2;
+        constraints.gridy = 1;
+        constraints.gridwidth = 4;
+        constraints.gridheight = 3;
+        gridBag.setConstraints(MessBox, constraints);
+
+        //Adds Adds in Buttons, Boxes and Lists
+        selectionPanel.add(userLabel);
+        selectionPanel.add(usersOnline);
+        selectionPanel.add(textfield);
+        selectionPanel.add(clear);
+        selectionPanel.add(chatLabel);
+        selectionPanel.add(MessBox);
+    }
+
+    private void addComponents() {
+        setUpSelectionPanel();
+        add(selectionPanel);
+    }
+
+    public static void main(String[] args) {
+        new GUI().setVisible(true);
+    }
+}
